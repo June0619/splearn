@@ -18,7 +18,11 @@ public class Member {
 
 	private MemberStatus status;
 
-	public Member(final String email, final String nickname, final String passwordHash) {
+	public static Member create(String email, String nickname, String password, PasswordEncoder passwordEncoder) {
+		return new Member(email, nickname, passwordEncoder.encode(password));
+	}
+
+	private Member(final String email, final String nickname, final String passwordHash) {
 		this.email = Objects.requireNonNull(email);
 		this.nickname = Objects.requireNonNull(nickname);
 		this.passwordHash = Objects.requireNonNull(passwordHash);
@@ -37,4 +41,8 @@ public class Member {
 
 		this.status = MemberStatus.DEACTIVATED;
 	}
+
+    public boolean verifyPassword(String password, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(password, passwordHash);
+    }
 }
