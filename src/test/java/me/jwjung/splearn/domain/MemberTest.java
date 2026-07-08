@@ -76,4 +76,20 @@ class MemberTest {
 		assertThat(member.verifyPassword("SECRET", passwordEncoder)).isTrue();
 		assertThat(member.verifyPassword("hello", passwordEncoder)).isFalse();
 	}
+
+	@Test
+	void changeNickname() {
+		assertThat(member.getNickname()).isEqualTo("June");
+
+		member.changeNickname("Jiwoon");
+
+		assertThat(member.getNickname()).isEqualTo("Jiwoon");
+	}
+
+	@Test
+	void changePassword() {
+		member.changePassword("verysecret", passwordEncoder);
+		assertThat(member.verifyPassword("VERYSECRET", passwordEncoder)).isTrue();
+	}
+
 }

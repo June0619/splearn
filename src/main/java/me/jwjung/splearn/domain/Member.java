@@ -22,7 +22,7 @@ public class Member {
 		return new Member(email, nickname, passwordEncoder.encode(password));
 	}
 
-	private Member(final String email, final String nickname, final String passwordHash) {
+	private Member(String email, String nickname, String passwordHash) {
 		this.email = Objects.requireNonNull(email);
 		this.nickname = Objects.requireNonNull(nickname);
 		this.passwordHash = Objects.requireNonNull(passwordHash);
@@ -44,5 +44,13 @@ public class Member {
 
     public boolean verifyPassword(String password, PasswordEncoder passwordEncoder) {
         return passwordEncoder.matches(password, passwordHash);
+    }
+
+    public void changeNickname(String nickname) {
+		this.nickname = nickname;
+    }
+
+    public void changePassword(String password, PasswordEncoder passwordEncoder) {
+		this.passwordHash = passwordEncoder.encode(password);
     }
 }
