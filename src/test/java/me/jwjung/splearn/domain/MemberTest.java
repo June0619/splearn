@@ -25,7 +25,7 @@ class MemberTest {
 			}
 		};
 
-		member = Member.create("jiwoon@splearn.app", "June", "secret", passwordEncoder);
+		member = Member.create(new MemberCreateRequest("jiwoon@splearn.app", "June", "secret"), passwordEncoder);
 	}
 
 	@Test
@@ -36,7 +36,7 @@ class MemberTest {
 	@Test
 	@DisplayName("member 생성 시 email, nickname, passwordHash 는 null 이 될 수 없다.")
 	void constructorNonNull() {
-		assertThatThrownBy(() -> Member.create(null, "June", "secret", null))
+		assertThatThrownBy(() -> Member.create(new MemberCreateRequest(null, "June", "secret"), null))
 			.isInstanceOf(NullPointerException.class);
 	}
 
@@ -90,6 +90,19 @@ class MemberTest {
 	void changePassword() {
 		member.changePassword("verysecret", passwordEncoder);
 		assertThat(member.verifyPassword("VERYSECRET", passwordEncoder)).isTrue();
+	}
+
+	@Test
+	void isActive() {
+		assertThat(member.isActive()).isFalse();
+
+		member.activate();
+
+		assertThat(member.isActive()).isTrue();
+
+		member.deactivate();
+
+		assertThat(member.isActive()).isFalse();
 	}
 
 }
