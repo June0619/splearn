@@ -25,18 +25,18 @@ class MemberTest {
 			}
 		};
 
-		member = Member.create(new MemberCreateRequest("jiwoon@splearn.app", "June", "secret"), passwordEncoder);
+		member = Member.register(new MemberRegisterRequest("jiwoon@splearn.app", "June", "secret"), passwordEncoder);
 	}
 
 	@Test
-	void createMember() {
+	void registerMember() {
 		assertThat(member.getStatus()).isEqualTo(MemberStatus.PENDING);
 	}
 
 	@Test
 	@DisplayName("member 생성 시 email, nickname, passwordHash 는 null 이 될 수 없다.")
 	void constructorNonNull() {
-		assertThatThrownBy(() -> Member.create(new MemberCreateRequest(null, "June", "secret"), null))
+		assertThatThrownBy(() -> Member.register(new MemberRegisterRequest(null, "June", "secret"), null))
 			.isInstanceOf(NullPointerException.class);
 	}
 
@@ -108,10 +108,10 @@ class MemberTest {
 	@Test
 	void invalidEmail() {
 		assertThatThrownBy(() ->
-				Member.create(new MemberCreateRequest("invalid email", "Jiwoon", "secret"), passwordEncoder)
+				Member.register(new MemberRegisterRequest("invalid email", "Jiwoon", "secret"), passwordEncoder)
 		).isInstanceOf(IllegalArgumentException.class);
 
-		Member.create(new MemberCreateRequest("jiwoon@email.com", "Jiwoon", "secret"), passwordEncoder);
+		Member.register(new MemberRegisterRequest("jiwoon@email.com", "Jiwoon", "secret"), passwordEncoder);
 
 	}
 
