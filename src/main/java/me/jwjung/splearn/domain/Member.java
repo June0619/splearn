@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.NaturalId;
 
 @Entity
 @Getter
@@ -18,6 +19,7 @@ public class Member {
 	private Long id;
 
 	@Embedded
+	@NaturalId
 	private Email email;
 
 	private String nickname;
